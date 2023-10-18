@@ -1,5 +1,5 @@
 import * as React from 'react'
-import type { UserComponent, UserComponentConfig } from '@craftjs/core';
+import type { UserComponent, UserComponentConfig } from '@craftjs/core'; //  craft.js 是一个从上至下的模块化页面编辑器的解决方案，它内置了一套完善的拖拽体系，能有效的处理用户组件的组织与显示。
 import { useNode } from '@craftjs/core'
 import { ErrorBoundary } from "react-error-boundary";
 import { Alert, Typography }  from 'antd'
@@ -7,7 +7,7 @@ import { onUpdated, store } from './store'
 import { browserRuntimeVM } from  './jsRuntime'
 import { useSelector } from 'react-redux';
 import { cloneDeepWith } from 'lodash-es'
-import { useMount, useThrottleEffect } from 'ahooks'
+import { useMount, useThrottleEffect } from 'ahooks'  // 阿里团队维护的react hooks库
 import { has } from 'lodash-es'
 
 /** 物料类型 */
@@ -16,9 +16,11 @@ export type MaterialComponent = UserComponent
 export const fallbackRender = ({ error }: any) => {
 
   return (
-    <Alert banner icon={null}  type="error" description={<Typography.Text type="danger" >
-      {error}
-    </Typography.Text>} />
+    <Alert banner icon={null}  type="error" description={
+      <Typography.Text type="danger" >
+        {error}
+      </Typography.Text>
+    } /> // 文字排版
   );
 }
 
@@ -51,6 +53,7 @@ export function withMaterialNode<T = any> (WrapComponent: React.FunctionComponen
 
     const storeValues: any = useSelector((state) => state)
 
+    // 采用useMemo避免重复计算克隆
     const memoizedProps = React.useMemo(() => {
       const cloneProps =  cloneDeepWith(props,  (value) => {
 
@@ -71,7 +74,7 @@ export function withMaterialNode<T = any> (WrapComponent: React.FunctionComponen
     console.log(memoizedProps, 'memoizedProps')
 
     return (
-      <ErrorBoundary fallbackRender={fallbackRender}>
+      <ErrorBoundary fallbackRender={fallbackRender}> // 错误边界
         <WrapComponent ref={(dom: HTMLElement) => connect(drag(dom))} {...memoizedProps}/>
       </ErrorBoundary>
     )
