@@ -14,7 +14,6 @@ import { has } from 'lodash-es'
 export type MaterialComponent = UserComponent
 
 export const fallbackRender = ({ error }: any) => {
-
   return (
     <Alert banner icon={null}  type="error" description={
       <Typography.Text type="danger" >

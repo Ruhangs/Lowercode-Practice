@@ -1,5 +1,5 @@
 {
-  "name": "@lowercode-practice/materials",
+  "name": "@ruhangs/materials",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -9,20 +9,24 @@
   "main": "./dist/index.umd.js",
   "module": "./dist/index.es.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./dist/index.umd.js"
+    }
+  },
   "scripts": {
-    "start": "vite build --watch",
-    "build": "vite build"
+    "start": "tsup --watch",
+    "build": "tsup"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@chakra-ui/react": "^2.8.0",
-    "@emotion/react": "^11.11.0",
-    "@emotion/styled": "^11.11.0",
-    "@lgnition-lowcode/core": "workspace:^",
-    "@lgnition-lowcode/setter": "workspace:^",
     "@react-css/flex": "^2.2.0",
+    "@ruhangs/core": "workspace:^",
+    "@ruhangs/setter": "workspace:^",
     "framer-motion": "^10.15.0",
     "re-resizable": "^6.9.9"
   }

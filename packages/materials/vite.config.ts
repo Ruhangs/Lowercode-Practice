@@ -13,8 +13,8 @@ const externalPackages = [
   "@reduxjs/toolkit",
   "react-redux",
   "@ant-design/pro-components",
-  "@lgnition-lowcode/core",
-  "@lgnition-lowcode/setter",
+  "@ruhangs/core",
+  "@ruhangs/setter",
   "ahooks"
 ];
 
