@@ -9,7 +9,6 @@ import { css } from "@emotion/css";
 import { useEditor } from "@craftjs/core";
 import { RemixIcon } from "@ruhangs/icons";
 import { JsEditor } from './js-editor'
-import { QuestionCircleOutlined } from "@ant-design/icons";
 
 export const ToolBar = () => {
   const { token } = theme.useToken();
@@ -44,14 +43,14 @@ export const ToolBar = () => {
   /**
    * 处理删除选中节点逻辑
    */
-  const handleDeleteSelectedNode = () => {
-    try {
-      actions.delete(selectedId);
-      message.success("删除成功");
-    } catch (error) {
-      message.error("删除失败");
-    }
-  };
+  // const handleDeleteSelectedNode = () => {
+  //   try {
+  //     actions.delete(selectedId);
+  //     message.success("删除成功");
+  //   } catch (error) {
+  //     message.error("删除失败");
+  //   }
+  // };
 
   return (
     <div className={classes.toolbar}>
@@ -67,7 +66,7 @@ export const ToolBar = () => {
           onClick={actions.history.redo}
         />
       </Tooltip>
-      <Tooltip color="blue" placement="bottom" title="强制刷新">
+      {/* <Tooltip color="blue" placement="bottom" title="强制刷新">
         <Popconfirm
           title="强制刷新"
           description={<div style={{ width: 250 }} >强制刷新将会导致您页面的修改丢失，且无法恢复，如果继续进行下一步，请点击确认按钮。</div>}
@@ -82,7 +81,7 @@ export const ToolBar = () => {
             icon={<RemixIcon type="icon-refresh-line" />}
           />
         </Popconfirm>
-      </Tooltip>
+      </Tooltip> */}
       <JsEditor trigger={(
         <Tooltip placement="bottom" title="代码">
         <Button
@@ -91,7 +90,7 @@ export const ToolBar = () => {
         />
       </Tooltip>
       )} />
-      <Tooltip
+      {/* <Tooltip
         color={isRootNode ? "red" : "blue"}
         placement="bottom"
         title={isRootNode ? "当前选中为根节点，不允许删除" : "删除"}
@@ -102,7 +101,7 @@ export const ToolBar = () => {
           onClick={handleDeleteSelectedNode}
           disabled={isRootNode}
         />
-      </Tooltip>
+      </Tooltip> */}
     </div>
   );
 };

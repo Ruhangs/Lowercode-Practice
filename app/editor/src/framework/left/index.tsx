@@ -1,61 +1,74 @@
-import { theme, Tabs, TabsProps, Typography, Space, Divider } from "antd";
-import { Materials } from "./materials";
-import { Tree } from "./tree";
+import * as React from 'react'
+import { theme, Tabs, TabsProps } from "antd";
+import { CodepenOutlined, ApartmentOutlined, ApiOutlined, CloudSyncOutlined } from '@ant-design/icons'
 import { css } from "@emotion/css";
-import * as __baseMaterias__ from "@/framework/components";
-import * as __arcoDesignMaterias from "@/framework/components/design/arco";
-import { Queries } from './queries'
+import { Tree } from "./tree";
+import { Queries } from "./queries";
+import { Hisotry } from './hisotry'
+import { MaterialList } from "./materials/list";
+import { Sidebar } from './sider'
+
+
+const sidebarContext: Record<any, any> = {
+  components: <MaterialList />,
+  nodetree: <Tree />,
+  datasource: <Queries />,
+  cloud: <Hisotry />
+}
 
 export const Left = () => {
-  const { token } = theme.useToken();
-  // const [activeKey, setActiveKey] = React.useState("components");
-  const classes = {
-    main: css({
-      paddingInline: token.paddingXS,
-      width: 280,
-    }),
-  };
-
-  const items: TabsProps["items"] = [
-    {
-      key: "1",
-      label: "组件",
-      children: (
-        <div>
-          <Space size={12} direction="vertical" style={{ width: "100%" }}>
-            <Typography.Text type="secondary">基础组件</Typography.Text>
-            <Materials components={__baseMaterias__} />
-          </Space>
-          <Divider />
-          <Space size={12} direction="vertical" style={{ width: "100%" }}>
-            <Typography.Text type="secondary">Arco Design</Typography.Text>
-            <Materials components={__arcoDesignMaterias} />
-          </Space>
-          <Divider />
-        </div>
-      ),
-    },
-    {
-      key: "2",
-      label: "大纲树",
-      children: <Tree />,
-    },
-    {
-      key: "3",
-      label: "数据源",
-      children: <Queries/>
-    },
-  ];
+  const { token } = theme.useToken()
+  const [selectValue, setSelectValue] = React.useState<React.Key>("components")
 
   return (
-    <div className={classes.main}>
-      <Tabs
-        style={{
-          height: "100%",
-        }}
-        defaultActiveKey="1"
-        items={items}
-      />
+    <div className={css({
+      display: 'grid',
+      gridTemplateColumns: '45px 1fr'
+    })} >
+      <Sidebar
+        value={selectValue}
+        menus={[
+          {
+            value: "components",
+            prototype: {
+              tooltip: "组件",
+              icon: <CodepenOutlined />
+            }
+          },
+
+          {
+            value: "nodetree",
+            prototype: {
+              tooltip: "大纲树",
+              icon: <ApartmentOutlined />
+            }
+          },
+
+          {
+            value: 'datasource',
+            prototype: {
+              tooltip: "数据源",
+              icon: <ApiOutlined />
+            }
+          },
+
+          {
+            value: 'cloud',
+            prototype: {
+              tooltip: "存储",
+              icon: <CloudSyncOutlined />
+            }
+          }
+        ]}
+        onChange={(v) => v && setSelectValue(v)} />
+      <div className={css({
+        borderLeft: `1px solid ${token.colorBorderSecondary}`,
+        height: '100%',
+        width: 250,
+        overflow: 'auto'
+      })} >
+        {sidebarContext?.[selectValue as string]}
+      </div>
     </div>
-  );
+  )
 };

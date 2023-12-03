@@ -1,12 +1,12 @@
-import { defineConfig } from "tsup";
+import { defineConfig } from 'tsup'
 
 export default defineConfig((options) => ({
-  minify: false,
-  entry: ["src/index.ts"],
+  minify: !options.watch,
+  entry: ['src/index.ts'],
   splitting: false,
   sourcemap: false,
+  clean: true,
   format: ["esm", "cjs"],
-  clean: false,
   external: [
     "react",
     "react-dom",
@@ -19,7 +19,6 @@ export default defineConfig((options) => ({
     "@devtools-ds/console",
     "@ant-design/icons",
     "ahooks",
-    "@ruhangs/core"
   ],
   dts: true,
-}));
+}))

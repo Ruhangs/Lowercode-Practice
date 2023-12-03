@@ -1,18 +1,25 @@
 import React from "react";
 import { __Provider__, __Box__ } from "@/framework/components";
-import { __ArcoButton__ } from "@/framework/components/design/arco/button";
-import { __ArcoProTable__ } from "@/framework/components/design/arco/pro-table";
-import { Canvas, Frame as DocumentFrame, Element } from "@craftjs/core";
+import { __AntButton__ } from "@/framework/components/design/antd/button";
+import { Canvas, Frame as DocumentFrame } from "@craftjs/core";
 import { useFrame } from "react-frame-component";
 import { useDynamicHeadInsertion } from "../hooks/useDynamicHeadInsertion";
 import { CanvasRootId, compileModuleResolve, sucraseTransformCode, ScopeMoudleId } from "@ruhangs/core";
 import { useSchema } from '@/framework/stores/useSchema'
 import { useAsyncEffect } from "ahooks";
+import { DEVICE, useDevice } from "@/framework/stores/useDevice"
+
+const deviceWidthMap = {
+  [DEVICE.PC]: "100vw",
+  [DEVICE.MOBILE]: "375px",
+  [DEVICE.IPAD]: "768px",
+};
 
 export const DocumentNodes = () => {
   const { document: canvasDocument } = useFrame();
   const elements = useDynamicHeadInsertion();
   const jsMoudleCode = useSchema(select => select.jsMoudleCode)
+  const { deviceWidth } = useDevice()
 
   React.useEffect(() => {
     const canvasElement = document.getElementById(CanvasRootId);
@@ -35,9 +42,10 @@ export const DocumentNodes = () => {
     <div
       id="__CasterViewPort__"
       style={{
-        width: "100vw",
+        width: deviceWidthMap[deviceWidth],
         height: '100vh',
-        paddingInline: 12
+        paddingInline: 12,
+        margin: "auto",
       }}
     >
       <DocumentFrame>
@@ -48,10 +56,7 @@ export const DocumentNodes = () => {
           height="100%"
           width="100%"
         >
-          <Element canvas is={__Box__}>
-            <__ArcoButton__ />
-          </Element>
-          <__ArcoProTable__ />
+          <__AntButton__ />
         </Canvas>
       </DocumentFrame>
     </div>

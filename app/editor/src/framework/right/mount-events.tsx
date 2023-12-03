@@ -4,32 +4,24 @@ import {
   ProForm,
   ProFormItem,
   ProFormList,
-  ProFormText,
 } from "@ant-design/pro-components";
 import { useEditor } from "@craftjs/core";
 import { AutoComplete, Form } from "antd";
-import { merge } from 'lodash-es'
-
-const defaultOptions = [
-  {
-    label: "(onClick)点击事件",
-    value: "onClick",
-  },
-  {
-    label: "(onChange)修改事件",
-    value: "onChange",
-  },
-];
+import { getScopeJsModule } from '@ruhangs/core';
+import { filter } from 'lodash-es';
+import { toOptions } from '@ruhangs/setter';
 
 export const MountEvents = () => {
 
 
   const [form] = Form.useForm<any>();
+  const [methodOptions, setMethodOptions] = React.useState<any[]>([])
 
   const {
     id: nodeId,
     events,
     actions,
+    eventOptions
   } = useEditor((state) => {
     const [currentNodeId] = state.events.selected;
 
@@ -38,7 +30,8 @@ export const MountEvents = () => {
 
       return {
         id: currentNodeId,
-        events: data.props?.__events
+        events: data.props?.__events,
+        eventOptions: data?.custom?.eventOptions || []
       };
     }
   });
@@ -68,6 +61,21 @@ export const MountEvents = () => {
       console.log()
     }
   }, [nodeId])
+
+  const handleOnMoudleSearch = (searchVal: string) => {
+   try {
+    console.log('handleOnMoudleSearch')
+    const jsMoudle =  getScopeJsModule() || {}
+    console.log(Object.keys(jsMoudle), 'handleOnMoudleSearch')
+    const moudleKeys = Object.keys(jsMoudle)
+
+    const optionkeys = filter(moudleKeys, (key: string) => key.includes(searchVal))
+
+    setMethodOptions(toOptions(optionkeys))
+   } catch (error) {
+    console.log(error)
+   }
+  }
 
   return (
     <ProForm
@@ -99,7 +107,7 @@ export const MountEvents = () => {
               defaultCollapsed={true}
               bordered
               size="small"
-              title={`事件${meta.index}`}
+              title={`事件${meta.index + 1}`}
               style={{ marginBlockEnd: 8 }}
               extra={action}
               bodyStyle={{ paddingBlockEnd: 0 }}
@@ -112,17 +120,22 @@ export const MountEvents = () => {
           eventName: "handle$Event",
         }}
       >
-        <ProFormText
+        <ProFormItem style={{ padding: 0 }}
+          name="eventName"
+          label="事件名称" >
+          <AutoComplete onSearch={handleOnMoudleSearch} options={methodOptions}  />
+        </ProFormItem>
+        {/* <ProFormText
           style={{ padding: 0 }}
           width="md"
           name="eventName"
           label="事件名称"
-        />
+        /> */}
         <ProFormItem style={{ padding: 0 }}
           name="propName"
           label="绑定事件"
            >
-          <AutoComplete options={defaultOptions} />
+          <AutoComplete options={eventOptions} />
         </ProFormItem>
       </ProFormList>
     </ProForm>

@@ -29,7 +29,7 @@ const fallbackRender = (props: any) => {
  * 将UI组件和装饰器
  * @param { React.FunctionComponent } WrappedComponent 设计组件
  */
-const withConnectNode = (
+export const withConnectNode = (
   WrappedComponent: React.ForwardRefExoticComponent<React.RefAttributes<any>>,
 ): ReactMaterialComponent => {
   return function ({ children, __events = [], ...props }: Record<string, any>) {
@@ -60,7 +60,12 @@ const withConnectNode = (
           } else {
             connect(drag(dom))
           }
-        }} {...memoizdProps} {...eventProps} >{children}</WrappedComponent>
+        }}
+          {...memoizdProps}
+          {...eventProps}
+        >
+          {children}
+        </WrappedComponent>
       </ErrorBoundary>
     );
   }

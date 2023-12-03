@@ -6,6 +6,8 @@ import { Priview } from "./toolbar/preview";
 import { AppMenus } from "./menus";
 import { ToolBar } from "./toolbar";
 import { ConfigSettings } from '../common/settings'
+import DeleteTool from "./toolbar/delete";
+import Device from "./toolbar/device";
 
 export const Header: React.FC = () => {
   const { token } = theme.useToken();
@@ -65,9 +67,11 @@ export const Header: React.FC = () => {
             </Typography.Text>
           </div>
         </div>
-        <ToolBar />
+        <Device />
         <div className={classes.flex} style={{ justifyContent: 'flex-end' }} >
-          <ConfigSettings/>
+          <ToolBar />
+          <ConfigSettings />
+          <DeleteTool />
           <Priview />
           <Publish />
         </div>

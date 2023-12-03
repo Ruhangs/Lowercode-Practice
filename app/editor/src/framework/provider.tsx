@@ -1,31 +1,72 @@
 import React from "react";
-import { Editor as RootEditor } from "@craftjs/core";
+import { Editor as RootEditor, Options, } from "@craftjs/core";
 import * as DefaultMaterials from "./components";
-import * as ArcoMaterials from "./components/design/arco";
-import { RenderNodeWrapper } from "./render-wrapper";
-import { EmptySetter } from '../framework/canvas/empty-render'
-import { jsRuntime } from '@ruhangs/core'
-import { useMount } from "ahooks";
+import * as AntDMaterials from "./components/design/antd";
+// import { RenderNodeWrapper } from "./render-wrapper";
+import { CustomNodeRender } from '@/framework/common/custom-node-render'
+import { EmptySetter } from "@/framework/canvas/empty-render";
+import { useSchema } from "./stores/useSchema";
+import { jsRuntime } from "@ruhangs/core";
+import { ReactQeuryProvider } from "@/framework/common/react-query";
+import { I18nextProvider } from 'react-i18next'
+import i18n from 'i18next';
 
 
-export interface EditoRootWrapperProps {
+i18n.init({
+  resources: {
+    en: {
+      translation: {
+        "hello": "Hello",
+        "welcome": "Welcome to my app!"
+      }
+    },
+    zh: {
+      translation: {
+        "hello": "你好",
+        "welcome": "欢迎来到我的应用！"
+      }
+    }
+  },
+  lng: 'en',
+  fallbackLng: 'en',
+  interpolation: {
+    escapeValue: false
+  }
+});
+
+export type EditoRootWrapperProps = {
   // 本地storageKey, 用户缓存当前
   children?: React.ReactNode;
-}
+};
 
 export const EditoRootWrapper: React.FC<EditoRootWrapperProps> = (props) => {
+  const { jsMoudleCode, onChange } = useSchema();
 
-  // 生命周期实现
-  useMount(() => {
-    jsRuntime.loadJS("https://www.unpkg.com/dayjs@1.11.9/dayjs.min.js")
-  })
+  // 初始化js模块
+  React.useEffect(() => {
+    jsRuntime.mountJsMoudle(jsMoudleCode);
+  }, [jsMoudleCode]);
+
+  /**
+   * 处理编辑器画布修改
+   * @param query 查询参数
+   */
+  const handleEditorChange: Options["onNodesChange"] = (query) => {
+    const serNodes = query.getSerializedNodes()
+    onChange('serializeNodes', serNodes)
+  }
 
   return (
-    <RootEditor
-      resolver={{ ...DefaultMaterials, ...ArcoMaterials, EmptySetter }}
-      onRender={RenderNodeWrapper}
-    >
-      {props.children}
-    </RootEditor>
+      <ReactQeuryProvider>
+        <RootEditor
+          resolver={{ ...DefaultMaterials, EmptySetter, ...AntDMaterials }}
+          onRender={CustomNodeRender}
+          onNodesChange={handleEditorChange}
+        >
+          <I18nextProvider i18n={i18n} >
+            {props.children}
+          </I18nextProvider>
+        </RootEditor>
+      </ReactQeuryProvider>
   );
 };

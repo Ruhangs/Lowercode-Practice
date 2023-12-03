@@ -3,7 +3,7 @@ import { ProviderView } from './view'
 import { Panel } from './panel'
 
 export const __Provider__ = createReactMaterial(ProviderView, {
-  displayName: 'Provider',
+  displayName: '页面',
   custom: {
     useCanvas: true,
     useResize: false

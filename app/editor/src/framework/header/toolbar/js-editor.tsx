@@ -1,10 +1,8 @@
 import React from 'react'
 import { ModalForm, ProCard } from "@ant-design/pro-components";
-import { CodeEditor } from "../../../framework/common/code-editor";
-import type { OnMount, Editor } from "@monaco-editor/react";
-import { sucraseTransformCode, compileModuleResolve } from '@ruhangs/core'
-import { useSchema } from '../../../framework/stores/useSchema'
-import request from 'umi-request'
+import { CodeEditor } from "@/framework/common/code-editor";
+import type { OnMount } from "@monaco-editor/react";
+import { useSchema } from '@/framework/stores/useSchema'
 import { message } from 'antd';
 
 export interface JsEditorProps {
@@ -41,6 +39,10 @@ export const JsEditor: React.FC<JsEditorProps> = (props) => {
       noSemanticValidation: true,
       noSyntaxValidation: true,
     });
+    monaco.languages.typescript.javascriptDefaults.addExtraLib(
+      'content of react/index.d.ts',
+      'file:///node_modules/@types/react/index.d.ts'
+  );
 
     // 设置当前js配置
     monaco.languages.typescript.javascriptDefaults.setCompilerOptions({
