@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
-import { Resizable, ResizeCallback, ResizableProps } from "re-resizable";
+import { Resizable, ResizeCallback } from "re-resizable";
 
 export const ResizeBox: React.ComponentType<typeof Resizable & {
   children: React.ReactNode;
@@ -9,6 +9,7 @@ export const ResizeBox: React.ComponentType<typeof Resizable & {
   
   const handleResizableChange: ResizeCallback = (_, __, elRef) => {
     const { width, height } = elRef.style;
+    console.log(width, height);
     // setProp((prop: Record<string, any>) => {
     //   prop.width = width
     //   prop.height = height

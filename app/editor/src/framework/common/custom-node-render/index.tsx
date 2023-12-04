@@ -4,9 +4,7 @@ import { useNode, useEditor } from "@craftjs/core";
 import ReactDOM from "react-dom";
 import { useFrame } from "react-frame-component";
 import { DragOutlined, DeleteOutlined } from "@ant-design/icons";
-import { RemixIcon } from "@ruhangs/icons";
-import { Button, Flex, Popover, Space, Tooltip, Typography, theme, message } from "antd";
-import { PortalOperationNode } from "./portal";
+import { Flex, theme, message } from "antd";
 import { css } from "@emotion/react";
 
 export interface RenderNodeWrapperProps {
@@ -93,7 +91,9 @@ export const CustomNodeRender: React.FC<RenderNodeWrapperProps> = ({
         ? ReactDOM.createPortal(
           <div
             css={ isRootNode ? css({
-              float: "right",
+              position: "absolute",
+              top: 0,
+              right: 0,
               display: "flex"
             }) : css({
               position: "absolute",
@@ -107,7 +107,7 @@ export const CustomNodeRender: React.FC<RenderNodeWrapperProps> = ({
                 background: "#2178ea",
                 display: "flex",
                 height: 20,
-                maxWidth: 100,
+                width: "max-content",
                 zIndex: 10000,
                 pointerEvents: "none",
                 paddingInline: 4,
@@ -127,7 +127,6 @@ export const CustomNodeRender: React.FC<RenderNodeWrapperProps> = ({
                     align="center"
                     css={css({
                       height: 20,
-
                     })}
                   >
                     {name}

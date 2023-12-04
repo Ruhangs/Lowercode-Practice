@@ -1,8 +1,6 @@
-import { Button, Card, Col, Row, Space, Typography } from "antd";
-import { PageContainer, ProCard } from "@ant-design/pro-components";
+import { Col, Row, Space, Typography } from "antd";
 import { NotifyCard } from "./notify-card";
 import { AppDashBoardTable } from "./apps";
-import { right } from "../../tools/css";
 
 const HomePage = () => {
   return (

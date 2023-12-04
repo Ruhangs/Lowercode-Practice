@@ -56,7 +56,7 @@ export const DocumentNodes = () => {
           height="100%"
           width="100%"
         >
-          <__AntButton__ />
+          <__Box__ />
         </Canvas>
       </DocumentFrame>
     </div>

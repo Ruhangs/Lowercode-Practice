@@ -6,7 +6,7 @@ import { Priview } from "./toolbar/preview";
 import { AppMenus } from "./menus";
 import { ToolBar } from "./toolbar";
 import { ConfigSettings } from '../common/settings'
-import DeleteTool from "./toolbar/delete";
+import Reset from "./toolbar/reset";
 import Device from "./toolbar/device";
 
 export const Header: React.FC = () => {
@@ -71,7 +71,7 @@ export const Header: React.FC = () => {
         <div className={classes.flex} style={{ justifyContent: 'flex-end' }} >
           <ToolBar />
           <ConfigSettings />
-          <DeleteTool />
+          <Reset />
           <Priview />
           <Publish />
         </div>

@@ -42,8 +42,10 @@ export const CreateAppModal = () => {
       title="新建应用"
       modalProps={{
         okText: "立即创建",
-        bodyStyle: {
-          paddingBlock: 12,
+        styles: {
+          body:{
+            paddingBlock: 12,
+          }
         },
       }}
       onFinish={handleCreatorRecord}

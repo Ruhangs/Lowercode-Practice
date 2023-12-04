@@ -53,50 +53,51 @@ const handleInstallNpm = async (packageName: string, cdnUrl?: string) => {
   // } else {
   //   logger.error("CDN路径不存在")
   // }
-  console.log(packageName);
 
   const { ref } = connectJsRuntimeVM()
 
   const contentWindow = ref.contentWindow!;
-    const contentDocument = ref.contentDocument!;
+  const contentDocument = ref.contentDocument!;
 
-    return new Promise((resolve) => {
-      // 先查一遍，看看是否存在已经加载的script
-      const matchingElements = contentDocument.querySelectorAll(
-        `script[src="${cdnUrl}"]`
-      );
+  return new Promise((resolve) => {
+    // 先查一遍，看看是否存在已经加载的script
+    const matchingElements = contentDocument.querySelectorAll(
+      `script[src="${cdnUrl}"]`
+    );
 
-      if (matchingElements.length > 0) {
-        resolve(true);
-      } else {
-        const saveWindowKeys = Object.keys(contentWindow)
-        const script = contentDocument.createElement("script");
+    console.log("模块名", packageName);
 
-        script.setAttribute("src", cdnUrl!);
+    if (matchingElements.length > 0) {
+      resolve(true);
+    } else {
+      const saveWindowKeys = Object.keys(contentWindow)
+      const script = contentDocument.createElement("script");
 
-        // 执行过程中发生错误
-        contentWindow.addEventListener("error", (evt) => {
-          console.log(evt);
-          resolve(false);
-        });
+      script.setAttribute("src", cdnUrl!);
 
-        script.onload = () => {
-          console.log("加载成功: ", cdnUrl);
-          const curWindowKeys = Object.keys(contentWindow)
-          const diffKey = difference(curWindowKeys, saveWindowKeys)
-          console.log(curWindowKeys.length, saveWindowKeys.length, diffKey, '比对window的长度')
-          resolve(true);
-        };
+      // 执行过程中发生错误
+      contentWindow.addEventListener("error", (evt) => {
+        console.log(evt);
+        resolve(false);
+      });
 
-        script.onerror = () => {
-          resolve(false);
-        };
+      script.onload = () => {
+        console.log("加载成功: ", cdnUrl);
+        const curWindowKeys = Object.keys(contentWindow)
+        const diffKey = difference(curWindowKeys, saveWindowKeys)
+        console.log(curWindowKeys.length, saveWindowKeys.length, diffKey, '比对window的长度')
+        resolve(true);  
+      };
 
-        // 添加到 iframe 里面
-        ref.contentDocument!.head.appendChild(script);
-      }
-    });
-  
+      script.onerror = () => {
+        resolve(false);
+      };
+
+      // 添加到 iframe 里面
+      ref.contentDocument!.head.appendChild(script);
+    }
+  });
+
 }
 
 /**

@@ -1,6 +1,5 @@
-import { Button, Segmented, Space } from 'antd'
+import { Segmented, Space } from 'antd'
 import { css } from "@emotion/css"
-import { PlusOutlined } from '@ant-design/icons'
 import { CreateAppModal } from './create-app-modal'
 
 const classes = {

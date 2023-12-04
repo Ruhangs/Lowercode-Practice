@@ -16,7 +16,7 @@ function convertToTree(data: SerializedNodes): {
 } {
   const rootNode = data["ROOT"];
   const tree: MenuItem[] = [];
-  const openKeys: string[] = [];
+  const openKeys: string[] = [];  
 
   function traverse(nodeId: string): MenuItem {
     const node = data[nodeId];

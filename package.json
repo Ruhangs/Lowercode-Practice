@@ -64,6 +64,7 @@
     "react-router-dom": "^6.20.0",
     "tsup": "^8.0.1",
     "vite": "^4.4.11",
+    "wujie-react": "^1.0.21",
     "zustand": "^4.4.7"
   }
 }

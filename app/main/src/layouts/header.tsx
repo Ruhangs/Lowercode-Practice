@@ -41,7 +41,7 @@ export const customRenderHeaderContent: ProLayoutProps["headerContentRender"] = 
           <TooltipButton title="信息" icon={<InboxOutlined />} />
         </Space>
         {/* 用户信息 */}
-        <UserProfileDrawer />
+        {/* <UserProfileDrawer /> */}
       </Space>
     </div>
   );
